@@ -39,10 +39,17 @@
       left: 50%;
       transform-origin: 0% 0%;
       clip-path: polygon(0 0, 100% 0, 0 100%);
-      background-size: cover;
-      background-position: center;
-      border-radius: 0 0 0 100%;
-      opacity: 0.95;
+      background-color: #f8bbd0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+    }
+    .segment span {
+      font-size: 1em;
+      font-weight: bold;
+      color: #880e4f;
     }
     #spinBtn {
       padding: 15px 30px;
@@ -75,10 +82,10 @@
 
   <script>
     const gifts = [
-      { name: "Chúc bạn may mắn lần sau hehehe", img: "https://st2.depositphotos.com/1001019/11766/i/950/depositphotos_117668278-stock-photo-beautiful-roses-in-saint-emilion.jpg" },
-      { name: "Ỏ", img: "https://www.fahasa.com/blog/wp-content/uploads/2024/12/capybara-la-gi.jpg" },
-      { name: "Uầy, ai mà xinh thế", img: "https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/163146/Originals/cung-cu-giai-1.jpg" },
-      { name: "Quà ở đâu hk biết nựa", img: "https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/175568/Originals/font-chu-happy-birthday-dep-01.jpg" }
+      { name: "Happy birthday 🎂" },
+      { name: "Tích cực lên nào ❤️" },
+      { name: "Hoan hỉ hoan hỉ 🧧" },
+      { name: "Tuổi già vui vẻ 🎉" }
     ];
 
     const wheel = document.getElementById('wheel');
@@ -89,7 +96,7 @@
       const segment = document.createElement('div');
       segment.className = 'segment';
       segment.style.transform = `rotate(${i * anglePerSlice}deg) skewY(${90 - anglePerSlice}deg)`;
-      segment.style.backgroundImage = `url('${gift.img}')`;
+      segment.innerHTML = `<span>${gift.name}</span>`;
       wheel.appendChild(segment);
     });
 
