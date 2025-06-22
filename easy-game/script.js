@@ -1,6 +1,6 @@
 function checkPassword() {
   const input = document.getElementById("password").value;
-  const correctPassword = "010298TramAnhCute"; // <-- bạn đổi ở đây
+  const correctPassword = "010298TramAnhCutexiu"; // <-- bạn đổi ở đây
 
   if (input === correctPassword) {
     window.location.href = "raffle.html";
