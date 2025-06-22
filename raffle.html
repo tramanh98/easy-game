@@ -89,10 +89,10 @@
 
   <script>
     const gifts = [
-      { name: "Happy birthday 🎂" },
-      { name: "Tích cực lên nào ❤️" },
-      { name: "Hoan hỉ hoan hỉ 🧧" },
-      { name: "Tuổi già vui vẻ 🎉" }
+      { name: "Happy birthday 🎂", "gf": "Hông biết nựa" },
+      { name: "Tích cực lên nào ❤️", "gf": "Chỗ hông bao giờ thấy"},
+      { name: "Hoan hỉ hoan hỉ 🧧", "gf": "Hữu duyên sẽ thấy" },
+      { name: "Tuổi già vui vẻ 🎉", "gf": "Nó ở đó á" }
     ];
 
     const wheel = document.getElementById('wheel');
@@ -129,7 +129,7 @@
 
       setTimeout(() => {
         const gift = gifts[randomIndex];
-        document.getElementById('result').innerText = `🏱 ${gift.name}`;
+        document.getElementById('result').innerText = `🏱 ${gift.gf}`;
         document.getElementById('spinBtn').disabled = false;
       }, 4200);
     };
