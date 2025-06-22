@@ -6,43 +6,60 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(#ffeaf1, #e0f7fa);
+      background: radial-gradient(circle at center, #ffe0f0 0%, #fce4ec 100%);
       text-align: center;
       padding: 30px;
     }
     h1 {
-      font-size: 2em;
-      color: #ff4081;
+      font-size: 2.2em;
+      color: #ec407a;
     }
-    #wheel {
+    #wheel-container {
+      position: relative;
       width: 500px;
       height: 500px;
-      border-radius: 50%;
-      border: 10px solid #ff80ab;
       margin: 20px auto;
-      position: relative;
-      overflow: hidden;
     }
-    .slice {
+    #wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 12px dashed #f06292;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 20px rgba(240,98,146,0.5);
+      background: radial-gradient(circle at center, #fff0f5, #f8bbd0);
+      transform: rotate(0deg);
+    }
+    .segment {
       width: 50%;
       height: 50%;
       position: absolute;
       top: 50%;
       left: 50%;
       transform-origin: 0% 0%;
-      clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+      background-size: cover;
+      background-position: center;
+      border-radius: 0 0 0 100%;
+      opacity: 0.95;
     }
     #spinBtn {
       padding: 15px 30px;
       font-size: 1.2em;
-      background-color: #ff4081;
+      background-color: #f06292;
       color: white;
       border: none;
       border-radius: 10px;
       cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    #spinBtn:hover {
+      background-color: #ec407a;
     }
     #result {
-      margin-top: 20px;
+      margin-top: 30px;
       font-size: 1.5em;
       color: #4caf50;
     }
@@ -50,7 +67,9 @@
 </head>
 <body>
   <h1>Chúc mừng sinh nhật! ✨ Hãy bốc thăm một món quà!</h1>
-  <div id="wheel"></div>
+  <div id="wheel-container">
+    <div id="wheel"></div>
+  </div>
   <button id="spinBtn">Quay Vòng</button>
   <div id="result"></div>
 
@@ -63,35 +82,36 @@
     ];
 
     const wheel = document.getElementById('wheel');
+    const total = gifts.length;
+    const anglePerSlice = 360 / total;
 
-    function drawWheel() {
-      const total = gifts.length;
-      for (let i = 0; i < total; i++) {
-        const angle = 360 / total;
-        const slice = document.createElement('div');
-        slice.className = 'slice';
-        slice.style.transform = `rotate(${angle * i}deg) skewY(-${90 - angle}deg)`;
-        slice.style.backgroundImage = `url('${gifts[i].img}')`;
-        slice.style.backgroundSize = 'cover';
-        wheel.appendChild(slice);
-      }
-    }
+    gifts.forEach((gift, i) => {
+      const segment = document.createElement('div');
+      segment.className = 'segment';
+      segment.style.transform = `rotate(${i * anglePerSlice}deg) skewY(${90 - anglePerSlice}deg)`;
+      segment.style.backgroundImage = `url('${gift.img}')`;
+      wheel.appendChild(segment);
+    });
 
-    drawWheel();
+    let currentRotation = 0;
 
     document.getElementById('spinBtn').onclick = () => {
-      const anglePerSlice = 360 / gifts.length;
-      const randomIndex = Math.floor(Math.random() * gifts.length);
-      const rotateTo = 360 * 5 + (360 - randomIndex * anglePerSlice - anglePerSlice / 2);
-      
+      const randomIndex = Math.floor(Math.random() * total);
+      const extraRotations = 5;
+      const targetAngle = 360 - (randomIndex * anglePerSlice + anglePerSlice / 2);
+      const rotation = extraRotations * 360 + targetAngle;
+
+      currentRotation += rotation;
+
       wheel.style.transition = 'transform 4s ease-out';
-      wheel.style.transform = `rotate(${rotateTo}deg)`;
+      wheel.style.transform = `rotate(${currentRotation}deg)`;
 
       document.getElementById('spinBtn').disabled = true;
 
       setTimeout(() => {
         const gift = gifts[randomIndex];
-        document.getElementById('result').innerText = `✨ Bạn đã nhận được: ${gift.name} ✨`;
+        document.getElementById('result').innerText = `🎁 ${gift.name}`;
+        document.getElementById('spinBtn').disabled = false;
       }, 4200);
     };
   </script>
